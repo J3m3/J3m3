@@ -25,12 +25,7 @@ night_image_offset=$((offset * 2 - 2))
 day_image_name=$(format_offset $day_image_offset)
 night_image_name=$(format_offset $night_image_offset)
 
-echo $day_image_name
-echo $night_image_name
-
 current_time=$((10#$(date_kst +"%H")))
-
-echo $current_time
 
 if [ $current_time -ge 12 ]; then
   image_name=$day_image_name
@@ -38,6 +33,9 @@ else
   image_name=$night_image_name
 fi
 
+echo "Update on: $(date_kst)"
+echo "Current image is now: $image_name"
+
 alt=earth-go-round
 
-gsed -i "s/\[$alt\](.*)/\[$alt\](images\/$image_name)/g" README.md
+sed -i "s/\[$alt\](.*)/\[$alt\](images\/$image_name)/g" README.md
