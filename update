@@ -1,9 +1,19 @@
 #!/bin/bash
 
+START_POINT=3
 TZ="Asia/Seoul"
 
 date_kst() {
   TZ=$TZ date $@
+}
+
+calc_offset() {
+  local nth_day=$1
+  if [ $nth_day -lt $START_POINT ]; then
+    echo $((2 * ($nth_day + 362)))
+   else
+    echo $((2 * ($nth_day - 3)))
+  fi
 }
 
 format_offset() {
@@ -12,18 +22,18 @@ format_offset() {
 }
 
 current_year=$(date_kst +%Y)
-offset=$((10#$(date_kst +"%j")))
+nth_day=$((10#$(date_kst +"%j")))
 last_day_of_leap_year=366
 
-if [ $offset -eq $last_day_of_leap_year ]; then
-  offset=$(($offset - 1))
+if [ $nth_day -eq $last_day_of_leap_year ]; then
+  nth_day=$(($nth_day - 1))
 fi
 
-day_image_offset=$((offset * 2 - 1))
-night_image_offset=$((offset * 2 - 2))
+night_image_offset=$(calc_offset $nth_day)
+day_image_offset=$(($(calc_offset $nth_day) + 1))
 
-day_image_name=$(format_offset $day_image_offset)
 night_image_name=$(format_offset $night_image_offset)
+day_image_name=$(format_offset $day_image_offset)
 
 current_time=$((10#$(date_kst +"%H")))
 
