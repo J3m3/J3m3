@@ -27,5 +27,5 @@ jobs:
 
       - name: Commit & Push
         run: |
-          git commit -am "chore: update the image"
+          git commit -am "docs: update the earth-go-round image"
           git push
