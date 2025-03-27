@@ -1,1 +1,1 @@
-![earth-go-round](images/00166.webp)
+![earth-go-round](images/00167.webp)
